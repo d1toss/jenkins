@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  vars:
+    users: -username:user1 password:pass1 -username:user2 password:pass2
+  tasks:
+  user:
+    name: "{{item.username}}"
+    password: "{{item.password| password_hash('sha512')}}"
+    with_items: "{{users}}"
+
